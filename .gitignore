@@ -31,3 +31,13 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Fichiers de configuration locaux contenant des secrets
+application-local.properties
+.env
+.env.local
+
+# Clés et certificats
+*.key
+*.pem
+*.p12
