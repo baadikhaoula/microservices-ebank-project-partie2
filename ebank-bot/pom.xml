@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.4</version>
+        <!-- ✅ OBLIGATOIRE : Spring Boot 3.4.1 pour supporter Spring AI 1.0.0-M6 -->
+        <version>3.4.1</version>
         <relativePath/>
     </parent>
 
@@ -18,12 +20,14 @@
 
     <properties>
         <java.version>21</java.version>
+        <!-- ✅ OBLIGATOIRE : Version M6 qui contient le support MCP -->
         <spring-ai.version>1.0.0-M6</spring-ai.version>
-        <spring-cloud.version>2023.0.3</spring-cloud.version>
+        <!-- ✅ Compatible avec Spring Boot 3.4.x -->
+        <spring-cloud.version>2024.0.0</spring-cloud.version>
     </properties>
 
     <dependencies>
-        <!-- 1. WEB (Le bon nom pour Spring Boot) -->
+        <!-- 1. WEB -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -35,40 +39,35 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <!-- 3. OpenAPI / Swagger (⚠️ VERSION 2.6.0 OBLIGATOIRE POUR SPRING BOOT 3.3.x) -->
+        <!-- 3. OpenAPI / Swagger -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.6.0</version>
+            <version>2.7.0</version>
         </dependency>
 
-        <!-- 4. Discord -->
-        <dependency>
-            <groupId>com.zgamelogic</groupId>
-            <artifactId>spring-boot-starter-discord</artifactId>
-            <version>5.0.4</version>
-        </dependency>
-
-        <!-- 5. Telegram -->
+        <!-- 4. Telegram Bot -->
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots-spring-boot-starter</artifactId>
             <version>6.9.7.1</version>
         </dependency>
 
-        <!-- 6. Spring AI OpenAI -->
+        <!-- 5. Spring AI OpenAI (Utilisé comme pont vers Groq) -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+            <version>${spring-ai.version}</version>
         </dependency>
 
-        <!-- 7. Spring AI MCP Client -->
+        <!-- 6. Spring AI MCP Client (✅ Fonctionne maintenant avec la version M6) -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-mcp-client-spring-boot-starter</artifactId>
+            <version>${spring-ai.version}</version>
         </dependency>
 
-        <!-- 8. Spring Cloud Config & Eureka -->
+        <!-- 7. Spring Cloud : Config & Eureka -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
@@ -78,7 +77,20 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
-        <!-- 9. Tests (Unifié et correct) -->
+        <!-- 8. OpenFeign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!-- 9. Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- 10. Tests -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -110,11 +122,19 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
 
-    <!-- Dépôt nécessaire pour les versions Milestone de Spring AI -->
+    <!-- Dépôt OBLIGATOIRE pour les versions Milestone -->
     <repositories>
         <repository>
             <id>spring-milestones</id>
