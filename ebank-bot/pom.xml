@@ -53,11 +53,11 @@
             <version>6.9.7.1</version>
         </dependency>
 
-        <!-- ✅ Discord Bot (API Officielle JDA) -->
+        <!-- Discord Bot -->
         <dependency>
-            <groupId>net.dv8tion</groupId>
-            <artifactId>JDA</artifactId>
-            <version>5.0.0-beta.20</version>
+            <groupId>com.zgameLogic</groupId>
+            <artifactId>spring-boot-starter-discord</artifactId>
+            <version>5.0.4</version>
         </dependency>
         <!-- 5. Spring AI OpenAI (Utilisé comme pont vers Groq) -->
         <dependency>
