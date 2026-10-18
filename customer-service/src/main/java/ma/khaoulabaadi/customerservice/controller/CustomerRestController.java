@@ -24,8 +24,13 @@ public class CustomerRestController {
         return customerService.findCustomerById(id);
     }
 
+    // ✅ Méthode corrigée
     @PostMapping("/customers")
     public Customer saveCustomer(@RequestBody Customer customer) {
-        return customerService.saveCustomer(customer);
+        // Extraire les données de l'objet Customer
+        return customerService.saveCustomer(
+                customer.getName(),
+                customer.getEmail()
+        );
     }
 }
